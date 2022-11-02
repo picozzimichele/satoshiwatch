@@ -27,6 +27,7 @@ import WifiSvg from "./wifiSvg";
 import XSvg from "./xSvg";
 import HandSvg from "./handSvg";
 import DottedLineSvg from "./dottedLineSvg";
+import SatoshiSvg from "./satoshiSvg";
 
 export {
   ArrowDownSvg,
@@ -50,6 +51,7 @@ export {
   PlusSvg,
   RightArrowSvg,
   SaveSvg,
+  SatoshiSvg,
   SmallSpinningSVG,
   StripeSvg,
   SquareMeter,

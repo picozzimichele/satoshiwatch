@@ -6,6 +6,8 @@ export default function InputPrice({
   inputName,
   currencyName,
   currencySymbol,
+  onChange,
+  value,
 }) {
   const [active, setActive] = useState(false);
   let domNode = useClickOutside(() => {
@@ -28,7 +30,7 @@ export default function InputPrice({
         <p>Currency</p>
         <p>Amount</p>
       </div>
-      <div className="flex w-full justify-between text-sm text-gray-400 font-light">
+      <div className="flex w-full justify-between text-sm text-gray-400 font-light gap-2">
         <div className="flex items-center gap-2">
           {svg}
           <div className="flex flex-col">
@@ -37,10 +39,11 @@ export default function InputPrice({
           </div>
         </div>
         <input
-          placeholder="0"
-          dir="rtl"
+          type="number"
           className="text-4xl font-extralight outline-none bg-inherit overflow-hidden"
           id={inputName}
+          onChange={onChange}
+          value={value}
         ></input>
       </div>
     </div>
