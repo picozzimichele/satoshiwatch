@@ -56,7 +56,18 @@ export default function Home() {
           priceText={ethPrice?.split(".")[0]}
         />
         <p className="text-xs text-slate-400">real time prices</p>
-        <InputPrice svg={<TetherSvg height={30} width={30} />} />
+        <InputPrice
+          svg={<TetherSvg height={30} width={30} />}
+          inputName="tether"
+          currencyName="Tether"
+          currencySymbol="USDT"
+        />
+        <InputPrice
+          svg={<BtcSvg height={30} width={30} />}
+          inputName="bitcoin"
+          currencyName="Bitcoin"
+          currencySymbol="BTC"
+        />
       </div>
     </div>
   );
