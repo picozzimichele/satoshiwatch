@@ -40,7 +40,7 @@ export default function InputPrice({
         </div>
         <input
           type="number"
-          className="text-4xl font-extralight outline-none bg-inherit overflow-hidden"
+          className="flex w-full text-end text-4xl font-extralight outline-none bg-inherit overflow-hidden"
           id={inputName}
           onChange={onChange}
           value={value}
