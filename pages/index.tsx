@@ -8,9 +8,9 @@ export default function Home() {
   const ETHUSDT = "ethusdt";
   const [btcPrice, setBtcPrice] = useState<number | string>();
   const [ethPrice, setEThPrice] = useState<number | string>();
-  const [btcAmount, setBtcAmount] = useState<number | string>(0);
-  const [satsAmount, setSatoshiAmount] = useState<number | string>(0);
-  const [tetherAmount, setTetherAmount] = useState<number | string>(0);
+  const [btcAmount, setBtcAmount] = useState<number | string>();
+  const [satsAmount, setSatoshiAmount] = useState<number | string>();
+  const [tetherAmount, setTetherAmount] = useState<number | string>();
 
   function initWebsocket(tokenpair, setCoinPrice) {
     const ws = new WebSocket(
@@ -48,25 +48,31 @@ export default function Home() {
 
   function calculateCurrentBtcAmountFromTether(btcPrice, tetherAmount) {
     if (btcPrice && tetherAmount) {
-      setBtcAmount((Number(tetherAmount) / btcPrice).toFixed(2));
+      setBtcAmount((Number(tetherAmount) / btcPrice).toFixed(8));
       setSatoshiAmount(
-        Math.round(
-          (Number(tetherAmount) / Number(btcPrice)) * 100000000
-        ).toFixed(2)
+        ((Number(tetherAmount) / Number(btcPrice)) * 100000000).toFixed(0)
       );
     }
   }
 
   function calculateCurrentSatoshiAmountFromBtc(btcAmount) {
     if (btcAmount) {
-      setSatoshiAmount(Number(btcAmount) / 0.00000001);
+      setSatoshiAmount((Number(btcAmount) / 0.00000001).toFixed(0));
     }
   }
 
   function calculateFromSatoshiAmount(satsAmount, btcPrice) {
     if (satsAmount && btcPrice) {
-      setBtcAmount((Number(satsAmount) * 0.00000001).toFixed(2));
+      setBtcAmount((Number(satsAmount) * 0.00000001).toFixed(8));
       setTetherAmount((Number(satsAmount) * 0.00000001 * btcPrice).toFixed(2));
+    }
+  }
+
+  function checkInputValues(value) {
+    if (value === "") {
+      setBtcAmount("");
+      setSatoshiAmount("");
+      setTetherAmount("");
     }
   }
 
@@ -97,6 +103,7 @@ export default function Home() {
           onChange={(e) => {
             setTetherAmount(e.target.value);
             calculateCurrentBtcAmountFromTether(btcPrice, e.target.value);
+            checkInputValues(e.target.value);
           }}
           value={tetherAmount}
         />
@@ -109,6 +116,7 @@ export default function Home() {
             setBtcAmount(e.target.value);
             calculateCurrentBtcPrice(btcPrice, e.target.value);
             calculateCurrentSatoshiAmountFromBtc(e.target.value);
+            checkInputValues(e.target.value);
           }}
           value={btcAmount}
         />
@@ -120,6 +128,7 @@ export default function Home() {
           onChange={(e) => {
             setSatoshiAmount(e.target.value);
             calculateFromSatoshiAmount(e.target.value, btcPrice);
+            checkInputValues(e.target.value);
           }}
           value={satsAmount}
         />
