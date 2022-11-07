@@ -21,6 +21,7 @@ export default function Home() {
   const [btcAmount, setBtcAmount] = useState<number | string>();
   const [satsAmount, setSatoshiAmount] = useState<number | string>();
   const [tetherAmount, setTetherAmount] = useState<number | string>();
+  const [nodesAmount, setNodesAmount] = useState<number | string>();
 
   function initWebsocketBinance(tokenpair, setCoinPrice) {
     const ws = new WebSocket(
@@ -124,7 +125,14 @@ export default function Home() {
     }
   }
 
+  async function fetchBtcNodes() {
+    const res = await fetch("https://bitnodes.io/api/v1/snapshots/");
+    const data = await res.json();
+    setNodesAmount(data?.results[0].total_nodes);
+  }
+
   useEffect(() => {
+    fetchBtcNodes();
     initWebsocketBinance(BTCUSDT, setBtcPriceBinance);
     initWebsocketBinance(ETHUSDT, setEThPriceBinance);
     initWebsocketBitfinex(BTCUSDTBFX, setBtcPriceBitfinex);
@@ -137,6 +145,7 @@ export default function Home() {
         <PriceDisplay
           svg={<BtcSvg height={30} width={30} />}
           coinName={"Bitcoin"}
+          nodes={nodesAmount}
         />
         <div className="flex gap-2">
           <LivePriceDisplay
